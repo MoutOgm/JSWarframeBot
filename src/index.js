@@ -33,8 +33,13 @@ for (const folder of commandFolders) {
 // The distinction between `client: Client<boolean>` and `readyClient: Client<true>` is important for TypeScript developers.
 // It makes some properties non-nullable.
 client.once(Events.ClientReady, readyClient => {
-	console.log(`Ready! Logged in as ${readyClient.user.tag}`);
+	let interval_fissures = require("./interval/fissures.js")
+	setInterval(async () => {
+		await interval_fissures.get(readyClient);
+
+	}, 60000/60); // Check every minute
 });
+
 client.on(Events.InteractionCreate, async interaction => {
 	if (!interaction.isChatInputCommand()) return;
 

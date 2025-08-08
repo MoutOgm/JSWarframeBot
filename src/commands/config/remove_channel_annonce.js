@@ -1,8 +1,8 @@
 const { SlashCommandBuilder, InteractionContextType } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('set_channel_annonce')
-		.setDescription('Set announce channel')
+		.setName('remove_channel_annonce')
+		.setDescription('Remove announce channel')
 		.addChannelOption(option =>
 			option.setName('channel')
 				.setDescription('The channel to set as the announce channel')
@@ -11,15 +11,15 @@ module.exports = {
 		,
 	async execute(interaction) {
 		const channel = interaction.channel;
-		const guildId = interaction.guild.id;
 		const database = require('../../database/database.js');
-		if (database.annonce_channel.includes(channel.id)) {
-			await interaction.reply('This channel is already set as the announce channel.');
+		if (!database.annonce_channel.includes(channel.id)) {
+			await interaction.reply("This channel isn't set as the announce channel.");
 			return;
 		}
-		database.annonce_channel.push(interaction.options.getChannel('channel').id);
+
+		database.annonce_channel = database.annonce_channel.filter(channelId => channelId != interaction.option.getChannel('channel').id);
 		database.save();
 
-		await interaction.reply(`Announce channel set to ${channel.name}`);
+		await interaction.reply(`Announce channel removed`);
 	},
 };

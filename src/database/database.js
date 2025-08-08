@@ -3,7 +3,7 @@ const fs = require('fs');
 class Database {
     constructor(filePath) {
         this.filePath = filePath;
-        this.alertedFissures = [];
+        this.alertedFissures = {};
         this.annonce_channel = []; // Initialize annonce_channel
         this.load();
     }
@@ -24,11 +24,14 @@ class Database {
         };
         fs.writeFileSync(this.filePath, JSON.stringify(data, null, 2), 'utf8');
     }
-    addAlertedFissure(fissure) {
-        if (!this.alertedFissures.includes(fissure)) {
-            this.alertedFissures.push(fissure);
-            this.save();
+    addAlertedFissure(fissureId, channelId) {
+        if (!this.alertedFissures.get(fissureId)) {
+            this.alertedFissures.push({fissureId: [channelId]});
         }
+        if (!this.alertedFissures.get(fissureId).includes(channelId)) {
+            this.alertedFissures[fissureId].push(channelId)
+        }
+        // this.save():
     }
     isFissureAlerted(fissure) {
         return this.alertedFissures.includes(fissure);
