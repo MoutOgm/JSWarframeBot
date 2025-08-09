@@ -35,7 +35,7 @@ module.exports = {
                 return data.fissures.includes(f.type)
             })
             let fissures_filtered = fissures_missionned.filter(f => {
-                return !(database.alertedFissures[f.id] == userId)
+                return !database.alertedFissures[f.id] || !(database.alertedFissures[f.id].includes(userId))
             })
             fissures_filtered.forEach(async f => {
                 let tier = tier_list.get(f.node) ? tier_list.get(f.node).tier + " Tier " : ""

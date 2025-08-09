@@ -25,7 +25,7 @@ module.exports = {
                 })
             }
             let fissures_filtered = fissures.filter(f => {
-                return !(database.alertedFissures[f.id] == chanId)
+                return !database.alertedFissures[f.id] || !(database.alertedFissures[f.id].includes(chanId))
             })
             fissures_filtered.forEach(async f => {
                 let tier = ""
