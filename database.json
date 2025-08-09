@@ -1,5 +1,9 @@
 {
-  "alertedFissures": {},
+  "alertedFissures": {
+    "6897b92a976084291089b03f": [
+      "98850878722682880"
+    ]
+  },
   "alertedArbitrage": {},
   "annonce_channel": {},
   "mp_fissure": {
