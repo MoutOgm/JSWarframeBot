@@ -8,7 +8,6 @@ module.exports = {
         let database = require("../database/database")
         let { tier_list, images } = require("../database/arbitrage")
         log.info("Scanning arbitrages");
-
         if (Object.keys(database.annonce_channel).length == 0) {
             return ;
         }

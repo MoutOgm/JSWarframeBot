@@ -38,7 +38,7 @@ client.once(Events.ClientReady, async readyClient => {
 		await interval_mp_fissures.get(readyClient)
 		await interval_arbitrage.get(readyClient);
 		await interval_fissures.get(readyClient);
-	}, 60000/(60*5)); // Check every 5 minute
+	}, 60000*5); // Check every 5 minute
 });
 
 client.on(Events.InteractionCreate, async interaction => {

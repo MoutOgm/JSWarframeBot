@@ -34,9 +34,9 @@ const tier_list = new Map(Object.entries({
     }
 }))
 
-const images = new Map(Object.entries({
-    "image": 'https://static.wikia.nocookie.net/warframe/images/b/b9/VitusEssence.png/revision/latest?cb=20221130055924'
-}))
+const images = {
+    image: 'https://static.wikia.nocookie.net/warframe/images/b/b9/VitusEssence.png/revision/latest?cb=20221130055924'
+}
 
 const missionsType = [
     "Survival",
