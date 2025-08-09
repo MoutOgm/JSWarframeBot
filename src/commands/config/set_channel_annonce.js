@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, InteractionContextType } = require('discord.js');
+const { SlashCommandBuilder, InteractionContextType, PermissionFlagsBits } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('set_channel_annonce')
@@ -12,6 +12,7 @@ module.exports = {
 				.setDescription('Define announce from tier list')
 				.setRequired(false)
 		)
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
 		.setContexts(InteractionContextType.Guild)
 		,
 	async execute(interaction) {

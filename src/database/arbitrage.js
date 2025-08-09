@@ -34,9 +34,17 @@ const tier_list = new Map(Object.entries({
     }
 }))
 
-images = new Map(Object.entries({
+const images = new Map(Object.entries({
     "image": 'https://static.wikia.nocookie.net/warframe/images/b/b9/VitusEssence.png/revision/latest?cb=20221130055924'
 }))
+
+const missionsType = [
+    "Survival",
+    "Defense",
+    "Interception",
+    "Excavation",
+    ""
+]
 
 module.exports = {
     tier_list,

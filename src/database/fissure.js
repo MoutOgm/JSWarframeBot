@@ -134,10 +134,44 @@ const images = new Map(Object.entries({
     "Meso": "https://static.wikia.nocookie.net/warframe/images/e/e0/MesoRelicIntact.png/revision/latest?cb=20230224234310",
     "Neo": "https://static.wikia.nocookie.net/warframe/images/9/97/NeoRelicIntact.png/revision/latest?cb=20230224234154",
     "Axi": "https://static.wikia.nocookie.net/warframe/images/b/bd/AxiRelicIntact.png/revision/latest?cb=20230224233954",
+    "Omnia": "https://cdn.discordapp.com/attachments/1397281827684618422/1403791799197110303/Illustration_relique_warframe.png",
     "": "https://images-ext-1.discordapp.net/external/2KcKhWQ65J3bsMf4_Q9242c_LrltUA7h2nUg5Ryv_a0/https/cdn.warframestat.us/genesis/img/fissure-sm.png?format=webp&quality=lossless"
 }));
 
+const missionsType = [
+    "Defense",
+    "Survival",
+    "Spy",
+    "Interception",
+    "Extermination",
+    "Sabotage",
+    "Rescue",
+    "Mobile Defense",
+    "Capture",
+    "Excavation",
+    "Void Cascade",
+    "Assault",
+    "Disruption",
+    "Hive",
+]
+
+const missionTierList = [
+    "S",
+    "A",
+    "B",
+    "C",
+    "F"
+]
+
+const path = [
+    "SteelPath",
+    "NormalPath"
+]
+
 module.exports = {
     tier_list,
-    images
+    images,
+    missionsType,
+    missionTierList,
+    path
 }

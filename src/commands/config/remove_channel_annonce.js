@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, InteractionContextType } = require('discord.js');
+const { SlashCommandBuilder, InteractionContextType, PermissionFlagsBits } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('remove_channel_annonce')
@@ -7,6 +7,7 @@ module.exports = {
 			option.setName('channel')
 				.setDescription('The channel to set as the announce channel')
 				.setRequired(true))
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
 		.setContexts(InteractionContextType.Guild)
 		,
 	async execute(interaction) {

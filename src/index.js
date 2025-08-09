@@ -1,7 +1,5 @@
 const { get_fissure, get_arbitrage } = require("./callwf/mod.js");
-const fissure_data = require("./database/fissure.js");
-let {database} = require("./database/database.js");
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits, MessageFlags } = require('discord.js');
 const { token } = require('../config.json');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -35,7 +33,9 @@ for (const folder of commandFolders) {
 client.once(Events.ClientReady, async readyClient => {
 	let interval_fissures = require("./interval/fissures.js")
 	let interval_arbitrage = require('./interval/arbitrage.js')
+	let interval_mp_fissures = require('./interval/mp_fissures.js')
 	setInterval(async () => {
+		await interval_mp_fissures.get(readyClient)
 		await interval_arbitrage.get(readyClient);
 		await interval_fissures.get(readyClient);
 	}, 60000*5); // Check every 5 minute

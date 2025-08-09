@@ -49,7 +49,7 @@ module.exports = {
                 })
                 if (msg.channel.type === ChannelType.GuildAnnouncement) {
                     msg.crosspost()
-                    .then(r => log(info(r)))
+                    .then()
                     .catch(err => log.info(err))
                 }
                 database.addAlertedFissure(f.id, chanId)
