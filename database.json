@@ -1,6 +1,12 @@
 {
   "alertedFissures": [],
-  "annonce_channel": [
-    "1397336694365093988"
-  ]
+  "alertedArbitrage": [],
+  "annonce_channel": {
+    "1397336694365093988": {
+      "tier_list": false
+    },
+    "840263408535208006": {
+      "tier_list": true
+    }
+  }
 }

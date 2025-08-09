@@ -1,4 +1,4 @@
-const { get_fissure } = require("./callwf/mod.js");
+const { get_fissure, get_arbitrage } = require("./callwf/mod.js");
 const fissure_data = require("./database/fissure.js");
 let {database} = require("./database/database.js");
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
@@ -32,12 +32,12 @@ for (const folder of commandFolders) {
 // When the client is ready, run this code (only once).
 // The distinction between `client: Client<boolean>` and `readyClient: Client<true>` is important for TypeScript developers.
 // It makes some properties non-nullable.
-client.once(Events.ClientReady, readyClient => {
+client.once(Events.ClientReady, async readyClient => {
 	let interval_fissures = require("./interval/fissures.js")
+	console.log(await get_arbitrage())
 	setInterval(async () => {
 		await interval_fissures.get(readyClient);
-
-	}, 60000/60); // Check every minute
+	}, 60000*5); // Check every 5 minute
 });
 
 client.on(Events.InteractionCreate, async interaction => {

@@ -7,17 +7,21 @@ module.exports = {
 			option.setName('channel')
 				.setDescription('The channel to set as the announce channel')
 				.setRequired(true))
+		.addBooleanOption(option =>
+			option.setName('tierlist')
+				.setDescription('Define announce from tier list')
+				.setRequired(false)
+		)
 		.setContexts(InteractionContextType.Guild)
 		,
 	async execute(interaction) {
 		const channel = interaction.channel;
-		const guildId = interaction.guild.id;
 		const database = require('../../database/database.js');
-		if (database.annonce_channel.includes(channel.id)) {
+		if (database.annonce_channel[channel.id]) {
 			await interaction.reply('This channel is already set as the announce channel.');
 			return;
 		}
-		database.annonce_channel.push(interaction.options.getChannel('channel').id);
+		database.annonce_channel[interaction.options.getChannel('channel').id] = {tier_list: interaction.options.getBoolean('tierlist') || false};
 		database.save();
 
 		await interaction.reply(`Announce channel set to ${channel.name}`);

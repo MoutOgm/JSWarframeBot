@@ -12,12 +12,11 @@ module.exports = {
 	async execute(interaction) {
 		const channel = interaction.channel;
 		const database = require('../../database/database.js');
-		if (!database.annonce_channel.includes(channel.id)) {
+		if (!database.annonce_channel[channel.id]) {
 			await interaction.reply("This channel isn't set as the announce channel.");
 			return;
 		}
-
-		database.annonce_channel = database.annonce_channel.filter(channelId => channelId != interaction.option.getChannel('channel').id);
+		delete database.annonce_channel[channel.id]
 		database.save();
 
 		await interaction.reply(`Announce channel removed`);

@@ -5,7 +5,8 @@
  */
 
 const request = require("request-promise");
-
+const fs = require('fs')
+const path = require('node:path');
 /**
  * Warframe Class
  * @type {{new(Object): {voidTrader: Promise, events: Promise, syndicateMissions, cycleEarth: Promise, sorties: Promise, darkSectors, fissures, cyleCetus: Promise, invasions, dailyDeals, heartbeat: Promise, news: Promise, alerts: Promise, conclaveChallenges, simaris}}}
@@ -31,7 +32,20 @@ module.exports = class {
             request("https://api.warframestat.us/heartbeat").then(data => resolve(data)).catch(err => reject(err));
         })
     }
-
+    get arbitration() {
+        return new Promise((resolve, reject) => {
+            request("https://browse.wf/arbys.txt").then(d => {
+                let solNode = JSON.parse(fs.readFileSync(path.join(__dirname, 'solNodes.json')))
+                let arbitration = d.split('\n').map(line => line.split(','))
+                let to_return = new Map(
+                    arbitration.map(a => {
+                        return [a[0], solNode[a[1]]]
+                    })
+                )
+                resolve(to_return)
+            }).catch(e => reject(e));
+        })
+    }
     /**
      * The alerts and all data associated with them
      * @returns {Promise}
