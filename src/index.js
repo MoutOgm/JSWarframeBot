@@ -34,8 +34,9 @@ for (const folder of commandFolders) {
 // It makes some properties non-nullable.
 client.once(Events.ClientReady, async readyClient => {
 	let interval_fissures = require("./interval/fissures.js")
-	console.log(await get_arbitrage())
+	let interval_arbitrage = require('./interval/arbitrage.js')
 	setInterval(async () => {
+		await interval_arbitrage.get(readyClient);
 		await interval_fissures.get(readyClient);
 	}, 60000*5); // Check every 5 minute
 });

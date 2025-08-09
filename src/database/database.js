@@ -25,7 +25,7 @@ class Database {
             alertedArbitrage: this.alertedArbitrage,
             annonce_channel: this.annonce_channel,
         };
-        fs.writeFileSync(this.filePath, JSON.stringify(data, null, 2), 'utf8');
+        fs.writeFileSync(this.filePath, JSON.stringify(data), 'utf8');
     }
     addAlertedFissure(fissureId, channelId) {
         if (!this.alertedFissures[fissureId]) {
@@ -37,19 +37,20 @@ class Database {
         this.save();
     }
     addAlertedArbitrage(arbitrageId, channelId) {
-        if (!this.alertedArbitrage[fissureId]) {
-            this.alertedArbitrage[fissureId] = [channelId];
+        let aId = String("a"+arbitrageId)
+        if (!this.alertedArbitrage[aId]) {
+            this.alertedArbitrage[aId] = [channelId];
         }
-        if (!this.alertedArbitrage[fissureId].includes(channelId)) {
-            this.alertedArbitrage[fissureId].push(channelId)
+        if (!this.alertedArbitrage[aId].includes(channelId)) {
+            this.alertedArbitrage[aId].push(channelId)
         }
-        this.save();
+        // this.save();
     }
     isFissureAlerted(fissureId) {
-        return this.alertedFissures.includes(fissureId);
+        return this.alertedFissures[fissureId];
     }
     isArbitrageAlerted(arbitrageId) {
-        return this.alertedArbitrage.includes(arbitrageId);
+        return this.alertedArbitrage[String("a"+arbitrageId)];
     }
 }
 

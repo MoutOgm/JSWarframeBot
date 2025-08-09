@@ -48,7 +48,9 @@ module.exports = {
                     embeds: [embed]
                 })
                 if (msg.channel.type === ChannelType.GuildAnnouncement) {
-                    await msg.crosspost()
+                    msg.crosspost()
+                    .then(r => log(info(r)))
+                    .catch(err => log.info(err))
                 }
                 database.addAlertedFissure(f.id, chanId)
             })
