@@ -1,9 +1,20 @@
 const { SlashCommandBuilder, InteractionContextType, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags, ComponentType } = require('discord.js');
 const { missionsType, missionTierList, path } = require('../../database/fissure');
+const cron = require('node-cron')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('ping_me_fissures')
 		.setDescription('Configure Fissures Ping')
+        .addStringOption(option =>
+            option
+            .setName('days')
+            .setDescription("selections des jours d'envoie de la fissure (format = 1-7 ou juste 1)")
+        )
+        .addStringOption(option =>
+            option
+            .setName('hours')
+            .setDescription("selections des heures d'envoie de la fissure (format = 01-23 ou juste 07)")
+        )
         .setContexts([InteractionContextType.BotDM, InteractionContextType.Guild])
 		,
 	async execute(interaction) {
@@ -47,6 +58,9 @@ module.exports = {
         const SelectPath = new ActionRowBuilder()
             .addComponents(selectPath)
 
+        let already_exist = false
+        if (database[interaction.user.id]) already_exist = true
+
         const response = await interaction.reply({
             content: 'Fissures MP config :',
             components: [SelectionsMissions, SelectionsTier, SelectPath],
@@ -58,8 +72,13 @@ module.exports = {
         collector.on('collect', async (i) => {
             temp[i.customId] = i.values
             if (temp['fissures'] && temp['tier'] && temp['path']) {
+                temp.cron = `*/10 * ${interaction.options.getString('hours')??'*'} * * ${interaction.options.getString('days')??'*'}`
+                temp.active = true
                 database.mp_fissure[i.user.id] = temp
                 database.save()
+                if (!already_exist) {
+                    cron.schedule(temp.cron, async () => require('../../interval/mp_fissures.js').get(interaction.client, interaction.user.id))
+                }
                 await i.reply(`All configs selected finished`)
                 return;
             }

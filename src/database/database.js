@@ -12,7 +12,7 @@ class Database {
 
     load() {
         if (fs.existsSync(this.filePath)) {
-            const data = fs.readFileSync(this.filePath, 'utf8');
+            const data = fs.readFileSync(this.filePath, 'utf8')??'{}';
             let parsedData = JSON.parse(data);
             this.alertedArbitrage = parsedData.alertedArbitrage || new Map();
             this.alertedFissures = parsedData.alertedFissures || new Map();

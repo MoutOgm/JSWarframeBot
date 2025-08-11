@@ -32,6 +32,16 @@ module.exports = class {
             request("https://api.warframestat.us/heartbeat").then(data => resolve(data)).catch(err => reject(err));
         })
     }
+    drops(name) {
+        return new Promise((resolve, reject) => {
+            request(`https://api.warframestat.us/drops/search/${name}/`).then(d => new Promise((r,s)=> r(JSON.parse(d)))).then(json => resolve(json)).catch(e => reject(e));
+        })
+    }
+    items(name, language, by) {
+        return new Promise((resolve, reject) => {
+            request(`https://api.warframestat.us/items/search/${name}/?language=${language}&by=${by}`).then(d => new Promise((r,s)=> r(JSON.parse(d)))).then(json => resolve(json)).catch(e => reject(e));
+        })
+    }
     get arbitration() {
         return new Promise((resolve, reject) => {
             request("https://browse.wf/arbys.txt").then(d => {
