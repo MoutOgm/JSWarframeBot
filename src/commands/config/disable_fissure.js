@@ -19,5 +19,5 @@ module.exports = {
         database.save()
         interaction.reply('Désactivé')
     },
-    help: `Désactiver les envoies de fissures par mp (peut-être réactivé) avec /enable_fissure`
+    help: `Désactiver les envoies de fissures par mp (peut-être réactivé) avec /enable_fissure en MP`
 }

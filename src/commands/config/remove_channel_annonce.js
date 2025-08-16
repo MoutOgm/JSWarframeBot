@@ -22,5 +22,5 @@ module.exports = {
 
 		await interaction.reply(`Salon d'annonce retiré`);
 	},
-    help: `Retire un saon des annonces de fissures et arbitrage`
+    help: `Retire un salon des annonces de fissures et arbitrage`
 };

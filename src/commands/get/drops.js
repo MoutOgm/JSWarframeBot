@@ -85,5 +85,5 @@ module.exports = {
         })
 
     },
-    help: `Get drops of a certain item (with auto complete)`
+    help: `Affiche le taux de drops d’un objet (avec saisie semi-automatique) `
 }

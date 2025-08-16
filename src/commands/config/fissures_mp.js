@@ -72,7 +72,7 @@ module.exports = {
         collector.on('collect', async (i) => {
             temp[i.customId] = i.values
             if (temp['fissures'] && temp['tier'] && temp['path']) {
-                temp.cron = `*/10 * ${interaction.options.getString('hours')??'*'} * * ${interaction.options.getString('days')??'*'}`
+                temp.cron = `*/10 ${interaction.options.getString('hours')??'*'} * * ${interaction.options.getString('days')??'*'}`
                 temp.active = true
                 database.mp_fissure[i.user.id] = temp
                 database.save()

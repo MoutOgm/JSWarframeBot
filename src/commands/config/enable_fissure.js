@@ -19,5 +19,5 @@ module.exports = {
         database.save()
         interaction.reply('Activé')
     },
-    help: `Active les fissures alertes configurées`
+    help: `Active les fissures alertes configurées en MP`
 }
