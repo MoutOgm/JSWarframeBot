@@ -2,7 +2,6 @@ const { EmbedBuilder, SlashCommandBuilder, InteractionContextType, StringSelectM
 const { missionsType, missionTierList, path } = require('../../database/fissure');
 const { get_drops, get_items, get_item } = require('../../callwf/mod')
 const dbItems = require('../../database/items');
-const { components } = require('electron');
 const log = require('log4js').getLogger()
 log.level = "info"
 
