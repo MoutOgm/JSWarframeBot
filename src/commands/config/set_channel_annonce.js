@@ -2,14 +2,14 @@ const { SlashCommandBuilder, InteractionContextType, PermissionFlagsBits } = req
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('set_channel_annonce')
-		.setDescription('Set announce channel')
+		.setDescription("Configure un salon d'annonce des fissures et arbitrage")
 		.addChannelOption(option =>
 			option.setName('channel')
-				.setDescription('The channel to set as the announce channel')
+				.setDescription("Salon d'annonce")
 				.setRequired(true))
 		.addBooleanOption(option =>
 			option.setName('tierlist')
-				.setDescription('Define announce from tier list')
+				.setDescription("Utilisation de la tier list pour filtrer les annonces")
 				.setRequired(false)
 		)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
@@ -19,12 +19,13 @@ module.exports = {
 		const channel = interaction.channel;
 		const database = require('../../database/database.js');
 		if (database.annonce_channel[channel.id]) {
-			await interaction.reply('This channel is already set as the announce channel.');
+			await interaction.reply('Ce salon est déjà configurer, veuillez utiliser /remove_channel');
 			return;
 		}
 		database.annonce_channel[interaction.options.getChannel('channel').id] = {tier_list: interaction.options.getBoolean('tierlist') || false};
 		database.save();
 
-		await interaction.reply(`Announce channel set to ${channel.name}`);
+		await interaction.reply(`Annonces configurées dans ${channel.name}`);
 	},
+    help: `Configure un salon d'annonce des fissures et arbitrage`
 };

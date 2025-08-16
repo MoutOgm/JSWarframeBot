@@ -4,7 +4,7 @@ const cron = require('node-cron')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('disable_fissure')
-		.setDescription('Configure Fissures Ping'),
+		.setDescription('Désactiver les envoies de fissures par mp (peut-être réactivé)'),
     async execute(interaction) {
         const database = require('../../database/database.js');
         if (!database.mp_fissure[interaction.user.id]) {
@@ -18,5 +18,6 @@ module.exports = {
         database.mp_fissure[interaction.user.id].active = false
         database.save()
         interaction.reply('Désactivé')
-    }
+    },
+    help: `Désactiver les envoies de fissures par mp (peut-être réactivé) avec /enable_fissure`
 }

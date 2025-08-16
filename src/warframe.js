@@ -34,12 +34,20 @@ module.exports = class {
     }
     drops(name) {
         return new Promise((resolve, reject) => {
-            request(`https://api.warframestat.us/drops/search/${name}/`).then(d => new Promise((r,s)=> r(JSON.parse(d)))).then(json => resolve(json)).catch(e => reject(e));
+            const safeName = encodeURIComponent(name);
+            request(`https://api.warframestat.us/drops/search/${safeName}/`).then(d => new Promise((r,s)=> r(JSON.parse(d)))).then(json => resolve(json)).catch(e => reject(e));
         })
     }
     items(name, language, by) {
+        const safeName = encodeURIComponent(name);
         return new Promise((resolve, reject) => {
-            request(`https://api.warframestat.us/items/search/${name}/?language=${language}&by=${by}`).then(d => new Promise((r,s)=> r(JSON.parse(d)))).then(json => resolve(json)).catch(e => reject(e));
+            request(`https://api.warframestat.us/items/search/${safeName}/?language=${language}&by=${by}`).then(d => new Promise((r,s)=> r(JSON.parse(d)))).then(json => resolve(json)).catch(e => reject(e));
+        })
+    }
+    item(name, language, by) {
+        const safeName = encodeURIComponent(name);
+        return new Promise((resolve, reject) => {
+            request(`https://api.warframestat.us/items/${safeName}/?language=${language}&by=${by}`).then(d => new Promise((r,s)=> r(JSON.parse(d)))).then(json => resolve(json)).catch(e => reject(e));
         })
     }
     get arbitration() {

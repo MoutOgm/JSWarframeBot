@@ -2,10 +2,10 @@ const { SlashCommandBuilder, InteractionContextType, PermissionFlagsBits } = req
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('remove_channel_annonce')
-		.setDescription('Remove announce channel')
+		.setDescription("Retire un salon d'annonce")
 		.addChannelOption(option =>
 			option.setName('channel')
-				.setDescription('The channel to set as the announce channel')
+				.setDescription("Salon d'annonce")
 				.setRequired(true))
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
 		.setContexts(InteractionContextType.Guild)
@@ -14,12 +14,13 @@ module.exports = {
 		const channel = interaction.channel;
 		const database = require('../../database/database.js');
 		if (!database.annonce_channel[channel.id]) {
-			await interaction.reply("This channel isn't set as the announce channel.");
+			await interaction.reply("Ce salon n'est pas configuré et ne peut pas être retiré");
 			return;
 		}
 		delete database.annonce_channel[channel.id]
 		database.save();
 
-		await interaction.reply(`Announce channel removed`);
+		await interaction.reply(`Salon d'annonce retiré`);
 	},
+    help: `Retire un saon des annonces de fissures et arbitrage`
 };

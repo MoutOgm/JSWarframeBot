@@ -41,28 +41,23 @@ client.once(Events.ClientReady, async readyClient => {
 	cron.schedule('01 */5 * * * *', async () => {
 		await interval_arbitrage.get(readyClient);
 		await interval_fissures.get(readyClient);
-	})
+	}, {name: "fissure"})
 	for (const [userId, data] of Object.entries(database.mp_fissure)) {
 		cron.schedule(data.cron, async () => {
 			await interval_mp_fissures.get(readyClient, userId)
-		})
+		}, {name: userId})
 
 	}
 });
 
 client.on(Events.InteractionCreate, async interaction => {
 	if (interaction.isChatInputCommand()) {
-
-
 		const command = interaction.client.commands.get(interaction.commandName);
-
 
 		if (!command) {
 			console.error(`No command matching ${interaction.commandName} was found.`);
 			return;
 		}
-
-
 
 		try {
 			await command.execute(interaction);

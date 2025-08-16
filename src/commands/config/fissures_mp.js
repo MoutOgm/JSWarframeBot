@@ -4,16 +4,16 @@ const cron = require('node-cron')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('ping_me_fissures')
-		.setDescription('Configure Fissures Ping')
+		.setDescription('Configure mp fissures alerts')
         .addStringOption(option =>
             option
             .setName('days')
-            .setDescription("selections des jours d'envoie de la fissure (format = 1-7 ou juste 1)")
+            .setDescription("selections des jours d'envoie de la fissure (format = * ou 1-7 ou 1,4,7.. ou 1)")
         )
         .addStringOption(option =>
             option
             .setName('hours')
-            .setDescription("selections des heures d'envoie de la fissure (format = 01-23 ou juste 07)")
+            .setDescription("selections des heures d'envoie de la fissure (format = * ou 01-23 ou 16,17,18 ou 07)")
         )
         .setContexts([InteractionContextType.BotDM, InteractionContextType.Guild])
 		,
@@ -21,7 +21,7 @@ module.exports = {
         const database = require('../../database/database.js');
         const selectFissuresMissions = new StringSelectMenuBuilder()
             .setCustomId('fissures')
-            .setPlaceholder('Select Missions One or More')
+            .setPlaceholder('Missions')
             .setMinValues(1)
             .setMaxValues(missionsType.length)
             .addOptions(missionsType.map(mission =>
@@ -31,7 +31,7 @@ module.exports = {
             ))
         const selectFissuresTierList = new StringSelectMenuBuilder()
             .setCustomId('tier')
-            .setPlaceholder('Select Tier List')
+            .setPlaceholder('Tier (tout -> list disable)')
             .setMinValues(1)
             .setMaxValues(missionTierList.length)
             .addOptions(missionTierList.map(tier =>
@@ -42,7 +42,7 @@ module.exports = {
 
         const selectPath = new StringSelectMenuBuilder()
             .setCustomId('path')
-            .setPlaceholder('Select Path')
+            .setPlaceholder('Path')
             .setMaxValues(path.length)
             .setMinValues(1)
             .addOptions(path.map(p =>
@@ -77,9 +77,9 @@ module.exports = {
                 database.mp_fissure[i.user.id] = temp
                 database.save()
                 if (!already_exist) {
-                    cron.schedule(temp.cron, async () => require('../../interval/mp_fissures.js').get(interaction.client, interaction.user.id))
+                    cron.schedule(temp.cron, async () => require('../../interval/mp_fissures.js').get(interaction.client, interaction.user.id), {name: i.user.id})
                 }
-                await i.reply(`All configs selected finished`)
+                await i.reply(`Alertes configurées et activées`)
                 return;
             }
             await i.reply({
@@ -88,4 +88,5 @@ module.exports = {
             });
         });
     },
+    help: `Configure le système d'alerte des fissures par mp`
 };

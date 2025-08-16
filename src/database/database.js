@@ -7,6 +7,7 @@ class Database {
         this.alertedArbitrage = new Map();
         this.annonce_channel = new Map(); // Initialize annonce_channel
         this.mp_fissure = new Map();
+        this.todo = new Map();
         this.load();
     }
 
@@ -18,7 +19,7 @@ class Database {
             this.alertedFissures = parsedData.alertedFissures || new Map();
             this.annonce_channel = parsedData.annonce_channel || new Map();
             this.mp_fissure = parsedData.mp_fissure || new Map();
-
+            this.todo = parsedData.todo || new Map();
         }
     }
     save() {
@@ -27,6 +28,7 @@ class Database {
             alertedArbitrage: this.alertedArbitrage,
             annonce_channel: this.annonce_channel,
             mp_fissure: this.mp_fissure,
+            todo: this.todo,
         };
         fs.writeFileSync(this.filePath, JSON.stringify(data, null, 2), 'utf8');
     }
