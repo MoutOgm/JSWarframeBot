@@ -14,13 +14,19 @@ module.exports = {
 		const channel = interaction.channel;
 		const database = require('../../database/database.js');
 		if (!database.annonce_channel[channel.id]) {
-			await interaction.reply("Ce salon n'est pas configuré et ne peut pas être retiré");
+			await interaction.reply({
+				content :"Ce salon n'est pas configuré et ne peut pas être retiré",
+				flags: MessageFlags.Ephemeral
+			});
 			return;
 		}
 		delete database.annonce_channel[channel.id]
 		database.save();
 
-		await interaction.reply(`Salon d'annonce retiré`);
+		await interaction.reply({
+			content: `Salon d'annonce retiré`,
+			flags: MessageFlags.Ephemeral
+		});
 	},
     help: `Retire un salon des annonces de fissures et arbitrage`
 };

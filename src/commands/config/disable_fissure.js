@@ -8,16 +8,25 @@ module.exports = {
     async execute(interaction) {
         const database = require('../../database/database.js');
         if (!database.mp_fissure[interaction.user.id]) {
-            await interaction.reply("Vous devez d'abord créer une alert: /ping_me_fissure")
+            await interaction.reply({
+                content: "Vous devez d'abord créer une alert: /ping_me_fissure",
+                flags: MessageFlags.Ephemeral
+            })
             return;
         }
         if (!database.mp_fissure[interaction.user.id].active) {
-            await interaction.reply("Déjà désactivé")
+            await interaction.reply({
+                content: "Déjà désactivé",
+                flags: MessageFlags.Ephemeral
+            })
             return;
         }
         database.mp_fissure[interaction.user.id].active = false
         database.save()
-        interaction.reply('Désactivé')
+        interaction.reply({
+            content: 'Désactivé',
+            flags: MessageFlags.Ephemeral
+        })
     },
     help: `Désactiver les envoies de fissures par mp (peut-être réactivé) avec /enable_fissure en MP`
 }

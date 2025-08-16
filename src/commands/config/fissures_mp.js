@@ -65,6 +65,7 @@ module.exports = {
             content: 'Fissures MP config :',
             components: [SelectionsMissions, SelectionsTier, SelectPath],
             withResponse: true,
+            flags: MessageFlags.Ephemeral
         })
 
         const collector = response.resource.message.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 60_000 });
@@ -79,7 +80,10 @@ module.exports = {
                 if (!already_exist) {
                     cron.schedule(temp.cron, async () => require('../../interval/mp_fissures.js').get(interaction.client, interaction.user.id), {name: i.user.id})
                 }
-                await i.reply(`Alertes configurées et activées`)
+                await i.reply({
+                    content: `Alertes configurées et activées`,
+                    flags: MessageFlags.Ephemeral
+                })
                 return;
             }
             await i.reply({
