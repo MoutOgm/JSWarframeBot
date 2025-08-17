@@ -2,7 +2,8 @@ const { get_fissure, get_arbitrage } = require("./callwf/mod.js");
 const { Client, Collection, Events, GatewayIntentBits, MessageFlags } = require('discord.js');
 const { token } = require('../config.json');
 const cron = require('node-cron');
-
+const log = require('log4js').getLogger()
+log.level = "info"
 
 const fs = require('node:fs');
 const path = require('node:path');
@@ -43,6 +44,7 @@ client.once(Events.ClientReady, async readyClient => {
 		await interval_fissures.get(readyClient);
 	}, {name: "fissure"})
 	for (const [userId, data] of Object.entries(database.mp_fissure)) {
+		log.info(`user mp fissure : ${userId} -> ${data.cron}`)
 		cron.schedule(data.cron, async () => {
 			await interval_mp_fissures.get(readyClient, userId)
 		}, {name: userId})
