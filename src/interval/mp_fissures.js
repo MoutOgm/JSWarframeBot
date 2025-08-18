@@ -13,6 +13,7 @@ module.exports = {
         let fissures = (await get_fissure()).filter(f => {
             return !f.isStorm
         });
+        log.info(`sending mp fisure : ${userId}`)
         let data = database.mp_fissure[userId]
         let fSteel = []
         let fNormal = []

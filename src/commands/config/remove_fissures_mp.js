@@ -17,10 +17,10 @@ module.exports = {
 		}
 		delete database.mp_fissure[interaction.user.id]
 		database.save();
-		let [task] = new Map([...cron.getTasks()].filter(([_, task]) => {
+		let tasks = new Map([...cron.getTasks()].filter(([_, task]) => {
 			return task.name == interaction.user.id;
-		})).values();
-		task.destroy()
+		}));
+		tasks.forEach(task => task.destroy())
 
 		await interaction.reply({
             content: "Configuration supprimée",

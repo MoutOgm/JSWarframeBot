@@ -59,7 +59,7 @@ module.exports = {
             .addComponents(selectPath)
 
         let already_exist = false
-        if (database[interaction.user.id]) already_exist = true
+        if (database.mp_fissure[interaction.user.id]) already_exist = true
 
         const response = await interaction.reply({
             content: 'Fissures MP config :',
@@ -77,9 +77,13 @@ module.exports = {
                 temp.active = true
                 database.mp_fissure[i.user.id] = temp
                 database.save()
-                if (!already_exist) {
-                    cron.schedule(temp.cron, async () => require('../../interval/mp_fissures.js').get(interaction.client, interaction.user.id), {name: i.user.id})
+                if (already_exist) {
+                    let tasks = new Map([...cron.getTasks()].filter(([_, task]) => {
+                        return task.name == interaction.user.id;
+                    }));
+                    tasks.forEach(task => task.destroy())
                 }
+                cron.schedule(temp.cron, async () => require('../../interval/mp_fissures.js').get(interaction.client, interaction.user.id), {name: i.user.id})
                 await i.reply({
                     content: `Alertes configurées et activées`,
                     flags: MessageFlags.Ephemeral
